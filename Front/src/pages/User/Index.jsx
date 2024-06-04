@@ -17,6 +17,10 @@ const User = () => {
     }
   }, [token, navigate]);
 
+  if (!token) {
+    return null; 
+  }
+
   return (
     <div>
       <Header />
