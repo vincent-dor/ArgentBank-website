@@ -1,0 +1,20 @@
+.profile {
+  padding-top: 1rem;
+  &__header {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.button {
+  &__edit {
+    margin: 5px;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+  }
+}
