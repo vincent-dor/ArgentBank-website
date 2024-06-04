@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Index";
 import Login from "./pages/Login/Index";
@@ -13,11 +15,21 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/user",
+    path: "/profile",
     element: <User />,
   },
 ]);
 
-const App = () => <RouterProvider router={router} />;
+const App = () => {
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    if (token) {
+      router.navigate("/profile");
+    }
+  }, [token]);
+
+  return <RouterProvider router={router} />;
+};
 
 export default App;

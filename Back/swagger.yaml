@@ -101,6 +101,94 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transactions:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: View Transaction
+      description: API for viewing a transaction
+      parameters:
+        - in: body
+          name: body
+          description: Transaction details
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionInput'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/transactions/{transactionId}:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get Transaction by ID
+      description: API for retrieving a transaction by its ID
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to retrieve
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction by ID retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionOutput'
+        '400':
+          description: Invalid Transaction ID
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Update Transaction by ID
+      description: API for updating a transaction by its ID
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction details to update
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdateInput'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema:
+            $ref: '#/definitions/TransactionOutput'
+        '400':
+          description: Invalid Transaction ID or fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -156,3 +244,58 @@ definitions:
     properties:
       userName:
         type: string
+  TransactionInput:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: Transaction date
+      description:
+        type: string
+        description: Transaction description
+      amount:
+        type: number
+        description: Transaction amount
+      balance:
+        type: number
+        description: Account balance after the transaction
+
+  TransactionUpdateInput:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Transaction category
+      note:
+        type: string
+        description: Transaction note
+
+  TransactionOutput:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Transaction ID
+      date:
+        type: string
+        format: date
+        description: Transaction date
+      description:
+        type: string
+        description: Transaction description
+      amount:
+        type: number
+        description: Transaction amount
+      balance:
+        type: number
+        description: Account balance after the transaction
+      transaction_type:
+        type: string
+        description: Type of transaction
+      category:
+        type: string
+        description: Transaction category
+      note:
+        type: string
+        description: Transaction note
