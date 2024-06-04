@@ -65,11 +65,9 @@ paths:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
-      #produces:
-       # - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -94,46 +92,40 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions:
+  /transaction:
     post:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: View Transaction
-      description: API for viewing a transaction
-      parameters:
-        - in: body
-          name: body
-          description: Transaction details
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionInput'
+        - Transaction Module
+      summary: View All Transactions
+      description: API for viewing all transactions of the user
       produces:
         - application/json
       responses:
         '200':
-          description: Transaction retrieved successfully
+          description: Transactions retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionInput'
+            type: array
+            items:
+              $ref: '#/definitions/TransactionOutput'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-  /user/transactions/{transactionId}:
+  /transaction/{transactionId}:
     post:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - Transaction Module
       summary: Get Transaction by ID
       description: API for retrieving a transaction by its ID
       parameters:
@@ -155,12 +147,11 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-
     put:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - Transaction Module
       summary: Update Transaction by ID
       description: API for updating a transaction by its ID
       parameters:
@@ -260,7 +251,6 @@ definitions:
       balance:
         type: number
         description: Account balance after the transaction
-
   TransactionUpdateInput:
     type: object
     properties:
@@ -270,7 +260,6 @@ definitions:
       note:
         type: string
         description: Transaction note
-
   TransactionOutput:
     type: object
     properties:
